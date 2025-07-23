@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import '../../data/network/network_api_services.dart';
 import '../../model/tree_list/tree_list_model.dart';
 import '../../utils/app_url.dart';
@@ -11,8 +13,9 @@ class TreeHttpApiRepository implements TreeApiRepository {
   ///
   /// Returns a [TreeListModel] representing the list of Tree.
   @override
-  Future<TreeListModel> fetchTreeList() async {
-    final response = await _apiServices.getApi(AppUrl.popularTreeListEndPoint);
+  Future<TreeListModel> fetchTreeList(String relationId) async {
+    var params = {"relative_id": relationId, "token": "llgjtihh4h-t4h4t5rhg5t4gt4wg84ts-8sh8t4gh84t8hg4t8g"};
+    final response = await _apiServices.postApi(AppUrl.popularMemberItemListEndPoint, jsonEncode(params));
     return TreeListModel.fromJson(response);
   }
 }

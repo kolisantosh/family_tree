@@ -15,7 +15,7 @@ class LogoutButtonWidget extends StatelessWidget {
         LocalStorage localStorage = LocalStorage();
         localStorage.clearValue('token').then((value) {
           localStorage.clearValue('isLogin');
-          Navigator.pushNamed(context, RoutesName.login); // Navigating to the login screen after clearing token and isLogin value
+          Navigator.pushNamed(context, RoutesName.getStarted); // Navigating to the login screen after clearing token and isLogin value
         });
       },
       child: Center(

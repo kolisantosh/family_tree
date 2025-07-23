@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -50,7 +48,9 @@ class GetStartedView extends StatelessWidget {
                 width: double.infinity,
                 child: ElevatedButton(
                   onPressed: () {
-                    Timer(const Duration(seconds: 2), () => Navigator.pushNamedAndRemoveUntil(context, RoutesName.login, (route) => false));
+                    Navigator.pushNamedAndRemoveUntil(context, RoutesName.home, (route) => false);
+
+                    // Timer(const Duration(seconds: 2), () => Navigator.pushNamedAndRemoveUntil(context, RoutesName.login, (route) => false));
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.purpleAccent,

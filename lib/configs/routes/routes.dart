@@ -1,7 +1,6 @@
 import 'package:family_tree/configs/routes/routes_name.dart';
 import 'package:flutter/material.dart';
 
-import '../../model/movie_list/movie_list_model.dart';
 import '../../view/views.dart';
 
 class Routes {
@@ -15,13 +14,13 @@ class Routes {
         return MaterialPageRoute(builder: (BuildContext context) => const GetStartedView());
 
       case RoutesName.home:
-        return MaterialPageRoute(builder: (BuildContext context) => const MoviesScreen());
+        return MaterialPageRoute(builder: (BuildContext context) => const MemberScreen());
 
       case RoutesName.login:
         return MaterialPageRoute(builder: (BuildContext context) => const LoginScreen());
 
       case RoutesName.tree:
-        return MaterialPageRoute(builder: (BuildContext context) => TreeView(args as TvShows));
+        return MaterialPageRoute(builder: (BuildContext context) => TreeView(args as String));
 
       default:
         return MaterialPageRoute(

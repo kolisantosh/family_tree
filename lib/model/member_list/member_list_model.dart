@@ -1,18 +1,18 @@
-import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:freezed_annotation/freezed_annotation.dart'; // Importing freezed_annotation package
 
-part 'tree_list_model.freezed.dart';
-part 'tree_list_model.g.dart';
+part 'member_list_model.freezed.dart';
+part 'member_list_model.g.dart';
 
 @freezed
-class TreeListModel with _$TreeListModel {
-  const factory TreeListModel({@JsonKey(name: "status") bool? status, @JsonKey(name: "data") List<Datut>? data}) = _TreeListModel;
+class MemberListModel with _$MemberListModel {
+  const factory MemberListModel({@JsonKey(name: "status") bool? status, @JsonKey(name: "data") List<Datum>? data}) = _MemberListModel;
 
-  factory TreeListModel.fromJson(Map<String, dynamic> json) => _$TreeListModelFromJson(json);
+  factory MemberListModel.fromJson(Map<String, dynamic> json) => _$MemberListModelFromJson(json);
 }
 
 @freezed
-class Datut with _$Datut {
-  const factory Datut({
+class Datum with _$Datum {
+  const factory Datum({
     @JsonKey(name: "member_id") String? memberId,
     @JsonKey(name: "primary_member") PrimaryMember? primaryMember,
     @JsonKey(name: "under_id") String? underId,
@@ -28,10 +28,9 @@ class Datut with _$Datut {
     @JsonKey(name: "address") String? address,
     @JsonKey(name: "created_at") DateTime? createdAt,
     @JsonKey(name: "status") String? status,
-    @JsonKey(name: "children") List<Datut>? children,
-  }) = _Datut;
+  }) = _Datum;
 
-  factory Datut.fromJson(Map<String, dynamic> json) => _$DatutFromJson(json);
+  factory Datum.fromJson(Map<String, dynamic> json) => _$DatumFromJson(json);
 }
 
 enum PrimaryMember {
@@ -48,11 +47,13 @@ enum Relation {
   DAUGHTER,
   @JsonValue("")
   EMPTY,
+  @JsonValue("Son")
+  SON,
   @JsonValue("Sun")
   SUN,
 }
 
-final relationValues = EnumValues({"Daughter": Relation.DAUGHTER, "": Relation.EMPTY, "Sun": Relation.SUN});
+final relationValues = EnumValues({"Daughter": Relation.DAUGHTER, "": Relation.EMPTY, "Son": Relation.SON, "Sun": Relation.SUN});
 
 class EnumValues<T> {
   Map<String, T> map;

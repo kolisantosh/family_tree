@@ -11,11 +11,11 @@ class ServiceLocator {
     getIt.registerLazySingleton<AuthApiRepository>(
       () => AuthHttpApiRepository(),
     ); // Registering AuthHttpApiRepository as a lazy singleton for AuthApiRepository
-    getIt.registerLazySingleton<MoviesApiRepository>(
-      () => MoviesHttpApiRepository(),
-    ); // Registering MoviesHttpApiRepository as a lazy singleton for MoviesApiRepository
+    getIt.registerLazySingleton<MemberApiRepository>(
+      () => MemberHttpApiRepository(),
+    ); // Registering MemberHttpApiRepository as a lazy singleton for MemberApiRepository
     getIt.registerLazySingleton<TreeApiRepository>(
       () => TreeHttpApiRepository(),
-    ); // Registering MoviesHttpApiRepository as a lazy singleton for MoviesApiRepository
+    ); // Registering TreeHttpApiRepository as a lazy singleton for TreeApiRepository
   }
 }

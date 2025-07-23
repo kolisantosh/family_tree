@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 import '../../services/splash/splash_services.dart'; // Importing the SplashServices class from the services/splash/splash_services.dart file
 
 /// A widget representing the splash screen of the application.

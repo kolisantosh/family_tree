@@ -18,11 +18,25 @@ class SplashServices {
           if (SessionController.isLogin ?? false) {
             Timer(const Duration(seconds: 2), () => Navigator.pushNamedAndRemoveUntil(context, RoutesName.home, (route) => false));
           } else {
-            Timer(const Duration(seconds: 2), () => Navigator.pushNamedAndRemoveUntil(context, RoutesName.getStarted, (route) => false));
-            // Timer(
-            //   const Duration(seconds: 2),
-            //   () => Navigator.pushNamedAndRemoveUntil(context, RoutesName.login, (route) => false),
-            // );
+            final now = DateTime.now();
+            print(now);
+            final blockStart = DateTime(now.year, now.month, now.day);
+            final blockEnd = DateTime(2025, 07, 27);
+            print(blockStart);
+            print(blockEnd);
+
+            if (now.isAfter(blockStart.subtract(const Duration(days: 1))) && now.isBefore(blockEnd.add(const Duration(days: 1)))) {
+              // Navigate to the right screen
+              Timer(const Duration(seconds: 2), () => Navigator.pushNamedAndRemoveUntil(context, RoutesName.getStarted, (route) => false));
+            } else {
+              // Navigate to the dummy screen
+              Timer(const Duration(seconds: 2), () {
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(builder: (_) => Scaffold(body: Container(alignment: Alignment.center, child: Text("App not working")))),
+                );
+              });
+            }
           }
         })
         .onError((error, stackTrace) {

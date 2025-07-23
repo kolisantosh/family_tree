@@ -20,7 +20,7 @@ class TreeBloc extends Bloc<TreeEvent, TreeState> {
 
   Future<void> fetchTreeListApi(TreeFetch event, Emitter<TreeState> emit) async {
     await treeApiRepository
-        .fetchTreeList()
+        .fetchTreeList(event.relationId)
         .then((response) {
           emit(state.copyWith(treeList: ApiResponse.completed(response)));
         })
