@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 
 class ThemeConfig {
-
-  static const primaryColor = Color(0xff115CCD);
+  static const primaryColor = Color(0xff385912);
   static const darkBackColor = Color(0xff141A1F);
 
   static const textColo151152 = Color(0xff151152);
@@ -27,6 +26,7 @@ class ThemeConfig {
   static const textColor808080 = Color(0xff808080);
   static const textColorDCE8E8 = Color(0xffDCE8E8);
   static const textColor37C9EE = Color(0xff37C9EE);
+  static const whiteColor = Color(0xFFFFFFFF);
 
   /// fonts family
   static const pangramRegular = 'Pangram Regular';
@@ -34,5 +34,4 @@ class ThemeConfig {
   static const pangramBold = 'Pangram Bold';
   static const pangramExtraBold = 'Pangram Extra Bold';
   static const pangramLight = 'Pangram Light';
-
 }

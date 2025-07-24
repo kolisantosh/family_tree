@@ -2,8 +2,8 @@ import 'dart:async';
 
 import 'package:family_tree/data/response/response.dart';
 import 'package:family_tree/data/response/status.dart';
+import 'package:family_tree/model/member_list/member_list_model.dart';
 import 'package:family_tree/view/member/widget/error_widget.dart';
-import 'package:family_tree/view/member/widget/logout_button_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -11,6 +11,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../../bloc/member_bloc/member_bloc.dart';
 import '../../configs/components/network_image_widget.dart';
 import '../../configs/routes/routes_name.dart';
+import '../../configs/themes/theme_config.dart';
 import '../../dependency_injection/locator.dart';
 
 class MemberScreen extends StatefulWidget {
@@ -56,9 +57,10 @@ class _MemberScreenState extends State<MemberScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: ThemeConfig.primaryColor,
         automaticallyImplyLeading: false,
-        title: Text(AppLocalizations.of(context)!.popularShows),
-        actions: const [LogoutButtonWidget(), SizedBox(width: 20)],
+        title: Text(AppLocalizations.of(context)!.title, style: TextStyle(color: Colors.white)),
+        // actions: const [LogoutButtonWidget(), SizedBox(width: 20)],
         bottom: PreferredSize(
           preferredSize: const Size.fromHeight(56),
           child: Padding(
@@ -67,8 +69,20 @@ class _MemberScreenState extends State<MemberScreen> {
               controller: _searchController,
               decoration: InputDecoration(
                 hintText: AppLocalizations.of(context)!.search,
-                prefixIcon: const Icon(Icons.search),
-                border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
+                hintStyle: TextStyle(color: ThemeConfig.borderColorDark),
+                prefixIcon: const Icon(Icons.search, color: ThemeConfig.borderColorDark),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(8),
+                  borderSide: BorderSide(color: ThemeConfig.borderColorDark, width: 1.5),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(8),
+                  borderSide: BorderSide(color: ThemeConfig.borderColorDark, width: 1.5),
+                ),
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(8),
+                  borderSide: BorderSide(color: ThemeConfig.borderColorDark, width: 1.5),
+                ),
               ),
               onFieldSubmitted: (value) {
                 if (value.isNotEmpty && value.length > 2) {
@@ -102,11 +116,9 @@ class _MemberScreenState extends State<MemberScreen> {
                     final treeData = movieList[index];
                     return Card(
                       child: ListTile(
+                        tileColor: treeData.primaryMember == PrimaryMember.YES ? ThemeConfig.primaryColor.withOpacity(0.5) : null,
                         onTap: () {
-                          Timer(
-                            const Duration(seconds: 2),
-                            () => Navigator.pushNamed(context, RoutesName.tree, arguments: treeData.relativeId),
-                          );
+                          Navigator.pushNamed(context, RoutesName.tree, arguments: treeData.relativeId);
                         },
                         leading: NetworkImageWidget(borderRadius: 5, imageUrl: treeData.profileImg.toString()),
                         title: Text(treeData.name.toString()),

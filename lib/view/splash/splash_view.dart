@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
+import '../../configs/Icon/icon.dart';
 import '../../services/splash/splash_services.dart'; // Importing the SplashServices class from the services/splash/splash_services.dart file
 
 /// A widget representing the splash screen of the application.
@@ -26,11 +26,12 @@ class _SplashViewState extends State<SplashView> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: Text(
-          // Displays the localized text for the splash screen
-          AppLocalizations.of(context)!.splashScreen,
-          style: Theme.of(context).textTheme.displayMedium, // Applies the displayMedium text style from the current theme
-        ),
+        child: Image.asset(AppIcons.logo, height: 150),
+        // child: Text(
+        //   // Displays the localized text for the splash screen
+        //   AppLocalizations.of(context)!.splashScreen,
+        //   style: Theme.of(context).textTheme.displayMedium, // Applies the displayMedium text style from the current theme
+        // ),
       ),
     );
   }
