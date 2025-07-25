@@ -1,6 +1,7 @@
 import 'package:family_tree/configs/routes/routes_name.dart';
 import 'package:flutter/material.dart';
 
+import '../../view/person_details/person_details_screen.dart';
 import '../../view/views.dart';
 
 class Routes {
@@ -21,6 +22,8 @@ class Routes {
 
       case RoutesName.tree:
         return MaterialPageRoute(builder: (BuildContext context) => TreeView(args as String));
+      case RoutesName.person_details:
+        return MaterialPageRoute(builder: (BuildContext context) => PersonDetailsScreen(args as String));
 
       default:
         return MaterialPageRoute(

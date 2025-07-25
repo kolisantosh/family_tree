@@ -12,4 +12,6 @@ class RoutesName {
 
   //tree screen routes name
   static const String tree = 'tree_screen';
+  //tree screen routes name
+  static const String person_details = 'person_details_screen';
 }

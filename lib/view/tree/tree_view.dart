@@ -1,3 +1,4 @@
+import 'package:family_tree/configs/routes/routes_name.dart';
 import 'package:family_tree/configs/themes/theme_config.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -23,6 +24,7 @@ class _TreeViewState extends State<TreeView> {
   final Graph graph = Graph()..isTree = true;
   final BuchheimWalkerConfiguration builder = BuchheimWalkerConfiguration();
 
+  var noPrimaryMember = false;
   final Set<String> mainNodeIds = {};
   final Map<String, Node> nodeMap = {};
   Map<String, Datut> memberDataMap = {};
@@ -75,29 +77,37 @@ class _TreeViewState extends State<TreeView> {
                   // Build the graph
                   buildGraphFromTreeList(treeList);
 
-                  return InteractiveViewer(
-                    constrained: false,
-                    boundaryMargin: const EdgeInsets.all(100),
-                    minScale: 0.01,
-                    maxScale: 5.6,
-                    child: GraphView(
-                      graph: graph,
-                      algorithm: BuchheimWalkerAlgorithm(builder, TreeEdgeRenderer(builder)),
-                      paint:
-                          Paint()
-                            ..color = Colors.green
-                            ..strokeWidth = 1
-                            ..style = PaintingStyle.stroke,
-                      builder: (Node node) {
-                        final memberId = node.key?.value;
-                        final datut = memberDataMap[memberId];
-                        // return SizedBox();
-                        return datut == null
-                            ? rectangleWidget(memberId, name: memberDataMap, imageUrl: datut?.profileImg!)
-                            : rectangleWidget(memberId, name: datut?.name!, imageUrl: datut?.profileImg!);
-                      },
-                    ),
-                  );
+                  return noPrimaryMember
+                      ? Center(child: Text(AppLocalizations.of(context)!.noDataFound))
+                      : InteractiveViewer(
+                        constrained: false,
+                        boundaryMargin: const EdgeInsets.all(100),
+                        minScale: 0.01,
+                        maxScale: 5.6,
+                        child: GraphView(
+                          graph: graph,
+                          algorithm: BuchheimWalkerAlgorithm(builder, TreeEdgeRenderer(builder)),
+                          paint:
+                              Paint()
+                                ..color = Colors.green
+                                ..strokeWidth = 1
+                                ..style = PaintingStyle.stroke,
+                          builder: (Node node) {
+                            print(node);
+                            final memberId = node.key?.value;
+                            final datut = memberDataMap[memberId];
+                            // if (datut == null) {
+                            //   final datut = memberDataMap[mainNodeIds.first];
+                            //   return rectangleWidget(memberId, name: datut!.name!, imageUrl: datut.profileImg!);
+                            // }
+                            // return rectangleWidget(memberId, name: datut.name!, imageUrl: datut.profileImg!);
+
+                            return datut == null
+                                ? rectangleWidget(memberId)
+                                : rectangleWidget(memberId, name: datut.name!, imageUrl: datut.profileImg!);
+                          },
+                        ),
+                      );
               }
             },
           ),
@@ -121,7 +131,7 @@ class _TreeViewState extends State<TreeView> {
         memberDataMap[item.memberId!] = item;
         nodeMap.putIfAbsent(item.memberId!, () => Node.Id(item.memberId));
 
-        if (item.primaryMember?.toString().toLowerCase() == 'yes') {
+        if (item.primaryMember! == PrimaryMember.YES) {
           rootMemberId = item.memberId;
         }
       }
@@ -140,6 +150,9 @@ class _TreeViewState extends State<TreeView> {
     // Safety check
     if (rootMemberId == null) {
       print('No primary member found.');
+      setState(() {
+        noPrimaryMember = true;
+      });
       return;
     }
 
@@ -197,57 +210,13 @@ class _TreeViewState extends State<TreeView> {
     }
   }
 
-  Future<void> buildGraphFromTreeList1(List<Datut> treeList) async {
-    graph.nodes.clear();
-    graph.edges.clear();
-    memberDataMap.clear();
-
-    // 1. Create unique nodes
-    for (final item in treeList) {
-      if (item.memberId != null) {
-        memberDataMap[item.memberId!] = item;
-        nodeMap.putIfAbsent(item.memberId!, () => Node.Id(item.memberId));
-        if (item.primaryMember == 'yes') {
-          mainNodeIds.add(item.memberId!);
-        }
-      }
-      if (item.relativeId != null) {
-        nodeMap.putIfAbsent(item.relativeId!, () => Node.Id(item.relativeId));
-      }
-    }
-
-    // 2. Add edges from relativeId → memberId
-    for (final item in treeList) {
-      final parentId = item.primaryMember == 'yes' ? item.memberId : item.relativeId;
-      final memberId = item.memberId;
-
-      if (parentId != null && memberId != null && parentId != memberId && nodeMap.containsKey(parentId) && nodeMap.containsKey(memberId)) {
-        graph.addEdge(nodeMap[parentId]!, nodeMap[memberId]!);
-      }
-
-      // 3. Add children edges if present
-      if (item.children != null && item.children!.isNotEmpty) {
-        for (final child in item.children!) {
-          if (child.memberId == null) continue;
-          memberDataMap[child.memberId!] = child;
-
-          nodeMap.putIfAbsent(child.memberId!, () => Node.Id(child.memberId));
-          if (memberId != null && nodeMap.containsKey(memberId)) {
-            graph.addEdge(nodeMap[memberId]!, nodeMap[child.memberId!]!);
-          }
-        }
-      }
-    }
-
-    // You now have mainNodeIds and a fully connected graph.
-  }
-
   Widget rectangleWidget(String? memberId, {String? name, String? imageUrl}) {
     final isMain = memberId != null && mainNodeIds.contains(memberId);
 
     return InkWell(
       onTap: () {
         print('Clicked node: $memberId');
+        Navigator.pushNamed(context, RoutesName.person_details, arguments: memberId);
       },
       child: Container(
         padding: const EdgeInsets.all(16),

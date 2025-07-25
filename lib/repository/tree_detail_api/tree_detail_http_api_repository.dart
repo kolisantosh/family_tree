@@ -13,7 +13,7 @@ class TreeDetailHttpApiRepository implements TreeDetailApiRepository {
   @override
   Future<TreeModel> fetchTreeDetail(String memberId) async {
     var params = {"member_id": memberId, "token": "dufuewjc545w-kkfghferf5ef8ehegf6511d-iuefeihddehi"};
-    final response = await _apiServices.postApi(AppUrl.popularMemberItemListEndPoint, params);
+    final response = await _apiServices.postApi(AppUrl.popularTressDetailEndPoint, params);
     return TreeModel.fromJson(response);
   }
 }
