@@ -15,10 +15,10 @@ part 'person_details_state.dart';
 class PersonDetailsBloc extends Bloc<PersonDetailsEvent, PersonDetailsState> {
   TreeDetailApiRepository treeDetailApiRepository;
   PersonDetailsBloc({required this.treeDetailApiRepository}) : super(PersonDetailsState(treeData: ApiResponse.loading())) {
-    on<PersonDataFetch>(fetchTreeListApi);
+    on<PersonDataFetch>(fetchTreeDetailsApi);
   }
 
-  Future<void> fetchTreeListApi(PersonDataFetch event, Emitter<PersonDetailsState> emit) async {
+  Future<void> fetchTreeDetailsApi(PersonDataFetch event, Emitter<PersonDetailsState> emit) async {
     await treeDetailApiRepository
         .fetchTreeDetail(event.memberId)
         .then((response) {
