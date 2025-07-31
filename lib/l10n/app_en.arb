@@ -18,6 +18,10 @@
     "welcomeToTheApp": "Welcome to the App",
     "settings": "Settings",
     "search": "Search",
-    "chatTitle": "Chat with people on Circle",
-    "chatSubtitle": "We are here to help you with any questions or issues you may have."
-}
+    "chatTitle": "Begin your journey of discovery",
+    "chatSubtitle": "Build your family tree and uncover roots today.",
+    "homeStart": "Start Discovering",
+    "homeThought": "Connect generations with love.",
+    "homeSub": "Discover, build, and share your family's beautiful story.",
+    "homeDetail": "🛡️ Disclaimer\nThis app is intended solely for viewing and exploring pre-created family trees. All information, relationships, and member data are added and managed exclusively by the app administrator.\n\nUsers do not have permission to add, edit, or delete any content within the app. The accuracy and relevance of the information displayed are based on the records provided by the administrator or verified sources.\n\nThe app is for informational and family-connection purposes only. If you believe any data is incorrect or needs to be updated, please contact the admin directly."
+  }

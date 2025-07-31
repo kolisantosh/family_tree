@@ -29,7 +29,7 @@ class MyApp extends StatelessWidget {
       // Material app configuration
       debugShowCheckedModeBanner: false,
       title: 'Rajporohit',
-      themeMode: ThemeMode.dark, // Setting theme mode to dark
+      themeMode: ThemeMode.light, // Setting theme mode to dark
       theme: lightTheme, // Setting light theme
       darkTheme: darkTheme, // Setting dark theme
       localizationsDelegates: const [

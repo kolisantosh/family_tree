@@ -1,3 +1,4 @@
+import 'package:family_tree/configs/Icon/icon.dart';
 import 'package:family_tree/configs/themes/theme_config.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -10,42 +11,48 @@ class GetStartedView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.all(24.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const Spacer(),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const SizedBox(height: 20),
 
-              // Illustration
-              // SvgPicture.asset(
-              //   'assets/chat_circle.svg', // Replace with your illustration
-              //   height: 250,
-              // ),
-              const SizedBox(height: 40),
+            Image.asset(AppIcons.logo, height: 90, fit: BoxFit.cover),
+            const SizedBox(height: 10),
 
-              // Title
-              Text(
+            // Title
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 24.0),
+              child: Text(
                 AppLocalizations.of(context)!.chatTitle, // Localized text for "Get Started"
                 textAlign: TextAlign.center,
-                // style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold, color: Colors.black87),
+                style: Theme.of(
+                  context,
+                ).textTheme.headlineLarge?.copyWith(fontSize: 26, fontWeight: FontWeight.bold, color: Colors.black87),
               ),
+            ),
 
-              const SizedBox(height: 16),
+            const SizedBox(height: 10),
 
-              // Subtitle
-              Text(
-                AppLocalizations.of(context)!.chatSubtitle, // Localized text for "Get Started"
+            // Subtitle
+            Text(
+              AppLocalizations.of(context)!.chatSubtitle, // Localized text for "Get Started"
+              textAlign: TextAlign.center,
+              style: Theme.of(
+                context,
+              ).textTheme.displayLarge?.copyWith(fontSize: 16, color: Colors.grey[600], fontFamily: "Poppins", fontStyle: FontStyle.italic),
+            ),
+            const Spacer(),
 
-                textAlign: TextAlign.center,
-                // style: TextStyle(fontSize: 16, color: Colors.grey[600]),
-              ),
+            Image.asset(AppIcons.img, height: 400, fit: BoxFit.cover),
 
-              const Spacer(),
+            const Spacer(),
 
-              // Get Started Button
-              SizedBox(
+            // Get Started Button
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 24.0),
+              child: SizedBox(
                 width: double.infinity,
                 child: ElevatedButton(
                   onPressed: () {
@@ -64,10 +71,10 @@ class GetStartedView extends StatelessWidget {
                   ),
                 ),
               ),
+            ),
 
-              const SizedBox(height: 16),
-            ],
-          ),
+            const SizedBox(height: 16),
+          ],
         ),
       ),
     );

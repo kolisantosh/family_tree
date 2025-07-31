@@ -21,7 +21,7 @@ class SplashServices {
             final now = DateTime.now();
             print(now);
             final blockStart = DateTime(now.year, now.month, now.day);
-            final blockEnd = DateTime(2025, 07, 27);
+            final blockEnd = DateTime(2025, 08, 27);
             print(blockStart);
             print(blockEnd);
 

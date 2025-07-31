@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
+import '../../configs/routes/routes_name.dart';
 import '../../data/response/status.dart';
 import '../../dependency_injection/locator.dart';
 import '../member/widget/error_widget.dart';
@@ -37,6 +38,18 @@ class _PersonDetailsScreenState extends State<PersonDetailsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      floatingActionButton: Padding(
+        padding: const EdgeInsets.only(bottom: 8.0),
+        child: FloatingActionButton(
+          backgroundColor: ThemeConfig.primaryColor,
+          onPressed: () {
+            Navigator.pushReplacementNamed(context, RoutesName.home);
+          },
+          tooltip: AppLocalizations.of(context)!.title == null ? 'Home' : 'Home',
+          child: const Icon(Icons.home, color: Colors.white),
+        ),
+      ),
       body: SafeArea(
         child: BlocProvider.value(
           value: personDetailsBloc,

@@ -22,10 +22,7 @@ class NetworkApiService implements BaseApiServices {
     }
     dynamic responseJson;
     try {
-      final response = await http.get(
-        Uri.parse(url),
-        headers: {'x-api-key': 'reqres-free-v1'},
-      ).timeout(const Duration(seconds: 20));
+      final response = await http.get(Uri.parse(url), headers: {'x-api-key': 'reqres-free-v1'}).timeout(const Duration(seconds: 20));
       responseJson = returnResponse(response);
     } on SocketException {
       throw NoInternetException('');
@@ -48,13 +45,16 @@ class NetworkApiService implements BaseApiServices {
   Future<dynamic> postApi(String url, dynamic data) async {
     if (kDebugMode) {
       print(url);
-      print(data);
+      // print(data);
     }
 
     dynamic responseJson;
     try {
-      final Response response =
-          await post(Uri.parse(url), headers: {'x-api-key': 'reqres-free-v1'}, body: data).timeout(const Duration(seconds: 10));
+      final Response response = await post(
+        Uri.parse(url),
+        headers: {'x-api-key': 'reqres-free-v1'},
+        body: data,
+      ).timeout(const Duration(seconds: 10));
       responseJson = returnResponse(response);
     } on SocketException {
       throw NoInternetException('No Internet Connection');

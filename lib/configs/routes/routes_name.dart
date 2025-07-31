@@ -9,6 +9,8 @@ class RoutesName {
 
   //home screen routes name
   static const String home = 'home_screen';
+  //member screen routes name
+  static const String member = 'member_screen';
 
   //tree screen routes name
   static const String tree = 'tree_screen';

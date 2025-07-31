@@ -25,6 +25,7 @@ class _SplashViewState extends State<SplashView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white, // Sets the background color of the splash screen
       body: Center(
         child: Image.asset(AppIcons.logo, height: 150),
         // child: Text(

@@ -84,33 +84,59 @@ class _TreeViewState extends State<TreeView> {
                         boundaryMargin: const EdgeInsets.all(100),
                         minScale: 0.01,
                         maxScale: 5.6,
-                        child: GraphView(
-                          graph: graph,
-                          algorithm: BuchheimWalkerAlgorithm(builder, TreeEdgeRenderer(builder)),
-                          paint:
-                              Paint()
-                                ..color = Colors.green
-                                ..strokeWidth = 1
-                                ..style = PaintingStyle.stroke,
-                          builder: (Node node) {
-                            print(node);
-                            final memberId = node.key?.value;
-                            final datut = memberDataMap[memberId];
-                            // if (datut == null) {
-                            //   final datut = memberDataMap[mainNodeIds.first];
-                            //   return rectangleWidget(memberId, name: datut!.name!, imageUrl: datut.profileImg!);
-                            // }
-                            // return rectangleWidget(memberId, name: datut.name!, imageUrl: datut.profileImg!);
+                        child: Stack(
+                          children: [
+                            // Background world map image; public domain / Wikimedia example
+                            Positioned.fill(
+                              child: Opacity(
+                                opacity: 0.3, // 0.0 = fully transparent, 1.0 = fully opaque
+                                child: Image.network(
+                                  'https://upload.wikimedia.org/wikipedia/commons/thumb/8/80/World_map_-_low_resolution.svg/1200px-World_map_-_low_resolution.svg.png',
+                                  fit: BoxFit.fitHeight,
+                                ),
+                              ),
+                            ),
+                            GraphView(
+                              graph: graph,
+                              algorithm: BuchheimWalkerAlgorithm(builder, TreeEdgeRenderer(builder)),
+                              paint:
+                                  Paint()
+                                    ..color = Colors.green
+                                    ..strokeWidth = 1
+                                    ..style = PaintingStyle.stroke,
+                              builder: (Node node) {
+                                print(node);
+                                final memberId = node.key?.value;
+                                final datut = memberDataMap[memberId];
+                                // if (datut == null) {
+                                //   final datut = memberDataMap[mainNodeIds.first];
+                                //   return rectangleWidget(memberId, name: datut!.name!, imageUrl: datut.profileImg!);
+                                // }
+                                // return rectangleWidget(memberId, name: datut.name!, imageUrl: datut.profileImg!);
 
-                            return datut == null
-                                ? rectangleWidget(memberId)
-                                : rectangleWidget(memberId, name: datut.name!, imageUrl: datut.profileImg!);
-                          },
+                                return datut == null
+                                    ? rectangleWidget(memberId)
+                                    : rectangleWidget(memberId, name: datut.name!, imageUrl: datut.profileImg!);
+                              },
+                            ),
+                          ],
                         ),
                       );
               }
             },
           ),
+        ),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      floatingActionButton: Padding(
+        padding: const EdgeInsets.only(bottom: 8.0),
+        child: FloatingActionButton(
+          backgroundColor: ThemeConfig.primaryColor,
+          onPressed: () {
+            Navigator.pushReplacementNamed(context, RoutesName.home);
+          },
+          child: const Icon(Icons.home, color: Colors.white),
+          tooltip: AppLocalizations.of(context)!.title == null ? 'Home' : 'Home',
         ),
       ),
     );
@@ -225,20 +251,40 @@ class _TreeViewState extends State<TreeView> {
           mainAxisSize: MainAxisSize.min,
           children: [
             if (imageUrl != null) ...[
-              ClipOval(
-                child: Image.network(
-                  imageUrl,
-                  width: 40,
-                  height: 40,
-                  fit: BoxFit.cover,
-                  errorBuilder: (context, error, stackTrace) => Icon(Icons.person),
+              Container(
+                width: 44, // image 40 + border padding
+                height: 44,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  border: Border.all(
+                    color: ThemeConfig.primaryColor, // or whatever color you want
+                    width: 2,
+                  ),
+                ),
+                child: ClipOval(
+                  child: Image.network(
+                    imageUrl,
+                    width: 40,
+                    height: 40,
+                    fit: BoxFit.cover,
+                    errorBuilder: (context, error, stackTrace) => Icon(Icons.person),
+                  ),
                 ),
               ),
               const SizedBox(height: 8),
             ],
             Text(
               name ?? '$memberId',
-              // style: TextStyle(fontWeight: isMain ? FontWeight.bold : FontWeight.normal, color: isMain ? Colors.red : Colors.black),
+              style: Theme.of(context).textTheme.headlineLarge?.copyWith(
+                shadows: [
+                  Shadow(
+                    offset: Offset(1.5, 1.5), // horizontal & vertical shadow offset
+                    blurRadius: 3.0, // how blurry the shadow is
+                    color: Colors.white.withOpacity(0.4), // shadow color with opacity
+                  ),
+                ],
+                color: isMain ? Colors.red : Colors.black,
+              ),
             ),
           ],
         ),
