@@ -67,6 +67,7 @@ class GetStartedView extends StatelessWidget {
             const Spacer(),
 
             SizedBox(height: 559, child: Image.asset(AppIcons.img, fit: BoxFit.cover)),
+
             // SizedBox(height: 10),
           ],
         ),
