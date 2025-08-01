@@ -12,6 +12,7 @@ class Routes {
 
       case RoutesName.getStarted:
         return MaterialPageRoute(builder: (BuildContext context) => const GetStartedView());
+
       case RoutesName.home:
         return MaterialPageRoute(builder: (BuildContext context) => const HomeScreen());
 
@@ -23,7 +24,8 @@ class Routes {
 
       case RoutesName.tree:
         return MaterialPageRoute(builder: (BuildContext context) => TreeView(args as String));
-      case RoutesName.person_details:
+
+      case RoutesName.personDetails:
         return MaterialPageRoute(builder: (BuildContext context) => PersonDetailsScreen(args as String));
 
       default:

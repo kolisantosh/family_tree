@@ -57,8 +57,6 @@ class GetStartedView extends StatelessWidget {
                 child: ElevatedButton(
                   onPressed: () {
                     Navigator.pushNamedAndRemoveUntil(context, RoutesName.home, (route) => false);
-
-                    // Timer(const Duration(seconds: 2), () => Navigator.pushNamedAndRemoveUntil(context, RoutesName.login, (route) => false));
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: ThemeConfig.primaryColor,

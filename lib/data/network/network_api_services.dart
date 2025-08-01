@@ -45,7 +45,7 @@ class NetworkApiService implements BaseApiServices {
   Future<dynamic> postApi(String url, dynamic data) async {
     if (kDebugMode) {
       print(url);
-      // print(data);
+      print(data);
     }
 
     dynamic responseJson;

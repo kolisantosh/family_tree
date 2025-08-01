@@ -17,7 +17,7 @@ class PersonDetailsBloc extends Bloc<PersonDetailsEvent, PersonDetailsState> {
   PersonDetailsBloc({required this.treeDetailApiRepository}) : super(PersonDetailsState(treeData: ApiResponse.loading())) {
     on<PersonDataFetch>(fetchTreeDetailsApi);
   }
-
+  String memberId = "";
   Future<void> fetchTreeDetailsApi(PersonDataFetch event, Emitter<PersonDetailsState> emit) async {
     await treeDetailApiRepository
         .fetchTreeDetail(event.memberId)

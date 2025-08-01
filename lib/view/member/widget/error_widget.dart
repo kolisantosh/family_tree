@@ -1,4 +1,5 @@
 import 'package:family_tree/bloc/member_bloc/member_bloc.dart';
+import 'package:family_tree/bloc/person_details_bloc/person_details_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -31,6 +32,40 @@ class MemberErrorWidget extends StatelessWidget {
               context.read<MemberBloc>().add(MemberFetch());
             },
             child: Center(child: Text(state.membersList.message.toString())),
+          );
+        }
+      },
+    );
+  }
+}
+
+/// A widget for displaying error messages related to member.
+class TreeErrorWidget extends StatelessWidget {
+  final memberId;
+  const TreeErrorWidget(this.memberId, {Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<PersonDetailsBloc, PersonDetailsState>(
+      buildWhen: (previous, current) => previous.treeData != current.treeData,
+      builder: (context, state) {
+        // Checking if the error message indicates no internet connection
+        if (state.treeData.message.toString() == AppLocalizations.of(context)!.noInternetConnection) {
+          // Displaying InternetExceptionWidget if there's no internet connection
+          return InterNetExceptionWidget(
+            onPress: () {
+              // Dispatching PostFetched event to trigger fetching member data
+              context.read<PersonDetailsBloc>().add(PersonDataFetch(memberId: memberId));
+            },
+          );
+        } else {
+          // Displaying error message as a clickable text if it's not related to internet connection
+          return InkWell(
+            onTap: () {
+              // Dispatching PostFetched event to trigger fetching member data
+              context.read<PersonDetailsBloc>().add(PersonDataFetch(memberId: memberId));
+            },
+            child: Center(child: Text(state.treeData.message.toString())),
           );
         }
       },

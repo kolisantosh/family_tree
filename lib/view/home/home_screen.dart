@@ -60,7 +60,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     // boxShadow: [BoxShadow(color: Colors.grey.shade400, blurRadius: 5, spreadRadius: 0.8)],
                     border: Border.all(color: Colors.grey),
                   ),
-                  child: ClipRRect(borderRadius: BorderRadius.circular(12), child: Image.asset(AppIcons.banner1, fit: BoxFit.cover)),
+                  child: ClipRRect(borderRadius: BorderRadius.circular(12), child: Image.asset(AppIcons.banner2, fit: BoxFit.cover)),
                 ),
                 const SizedBox(height: 30),
 
@@ -121,7 +121,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     // boxShadow: [BoxShadow(color: Colors.grey.shade400, blurRadius: 5, spreadRadius: 0.8)],
                     border: Border.all(color: Colors.grey),
                   ),
-                  child: ClipRRect(borderRadius: BorderRadius.circular(12), child: Image.asset(AppIcons.banner2, fit: BoxFit.cover)),
+                  child: ClipRRect(borderRadius: BorderRadius.circular(12), child: Image.asset(AppIcons.banner1, fit: BoxFit.cover)),
                 ),
                 const SizedBox(height: 20),
 

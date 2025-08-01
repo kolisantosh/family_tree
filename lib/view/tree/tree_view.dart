@@ -242,7 +242,8 @@ class _TreeViewState extends State<TreeView> {
     return InkWell(
       onTap: () {
         print('Clicked node: $memberId');
-        Navigator.pushNamed(context, RoutesName.person_details, arguments: memberId);
+        // GetIt.I<PersonDetailsBloc>().memberId = memberId.toString();
+        Navigator.pushNamed(context, RoutesName.personDetails, arguments: memberId);
       },
       child: Container(
         padding: const EdgeInsets.all(16),

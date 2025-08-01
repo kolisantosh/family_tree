@@ -1,5 +1,5 @@
 import 'package:family_tree/repository/tree_api/tree_http_api_repository.dart';
-import 'package:family_tree/repository/tree_detail_api/tree_detail_mock_api_repository.dart';
+import 'package:family_tree/repository/tree_detail_api/tree_detail_http_api_repository.dart' show TreeDetailHttpApiRepository;
 
 import '../repository/tree_api/tree_api_repository.dart';
 import '../repository/tree_detail_api/tree_detail_api_repository.dart';
@@ -20,7 +20,7 @@ class ServiceLocator {
       () => TreeHttpApiRepository(),
     ); // Registering TreeHttpApiRepository as a lazy singleton for TreeApiRepository
     getIt.registerLazySingleton<TreeDetailApiRepository>(
-      () => TreeDetailMockApiRepository(),
+      () => TreeDetailHttpApiRepository(),
     ); // Registering TreeDetailHttpApiRepository as a lazy singleton for TreeDetailApiRepository
   }
 }

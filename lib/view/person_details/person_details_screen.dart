@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:intl/intl.dart';
+import 'package:photo_view/photo_view.dart';
 
 import '../../configs/routes/routes_name.dart';
 import '../../data/response/status.dart';
@@ -66,6 +67,11 @@ class _PersonDetailsScreenState extends State<PersonDetailsScreen> {
   Widget build(BuildContext context) {
     final loc = AppLocalizations.of(context)!;
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: ThemeConfig.primaryColor,
+        title: Text(""),
+        iconTheme: Theme.of(context).iconTheme.copyWith(color: Colors.white),
+      ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: Padding(
         padding: const EdgeInsets.only(bottom: 8.0),
@@ -79,6 +85,7 @@ class _PersonDetailsScreenState extends State<PersonDetailsScreen> {
         ),
       ),
       body: SafeArea(
+        top: false,
         child: BlocProvider.value(
           value: personDetailsBloc,
           child: BlocBuilder<PersonDetailsBloc, PersonDetailsState>(
@@ -88,7 +95,7 @@ class _PersonDetailsScreenState extends State<PersonDetailsScreen> {
                 case Status.loading:
                   return const Center(child: CircularProgressIndicator());
                 case Status.error:
-                  return const MemberErrorWidget();
+                  return TreeErrorWidget(widget.memberId);
                 case Status.completed:
                   if (state.treeData.data == null || state.treeData.data!.data == null) {
                     return Center(child: Text(loc.noDataFound));
@@ -99,14 +106,54 @@ class _PersonDetailsScreenState extends State<PersonDetailsScreen> {
                     child: Column(
                       children: [
                         Container(
-                          height: 150,
+                          height: 120,
                           width: double.infinity,
                           color: ThemeConfig.primaryColor,
                           padding: const EdgeInsets.symmetric(horizontal: 16),
-                          child: SafeArea(
-                            child: Row(
-                              children: [
-                                CircleAvatar(
+                          child: Row(
+                            children: [
+                              GestureDetector(
+                                onTap: () {
+                                  if (person.profileImg != null && person.profileImg!.isNotEmpty) {
+                                    showDialog(
+                                      context: context,
+                                      useSafeArea: true,
+                                      builder:
+                                          (_) => Dialog(
+                                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                                            backgroundColor: Colors.transparent,
+                                            insetPadding: const EdgeInsets.all(8),
+                                            child: Stack(
+                                              children: [
+                                                SizedBox(
+                                                  width: double.infinity,
+                                                  height: MediaQuery.of(context).size.height * 0.6,
+                                                  child: PhotoView(
+                                                    imageProvider: NetworkImage(person.profileImg!),
+                                                    loadingBuilder: (context, event) => const Center(child: CircularProgressIndicator()),
+                                                    errorBuilder:
+                                                        (context, error, stackTrace) =>
+                                                            const Center(child: Icon(Icons.broken_image, size: 80, color: Colors.white)),
+                                                    backgroundDecoration: const BoxDecoration(color: Colors.transparent),
+                                                    minScale: PhotoViewComputedScale.contained,
+                                                    maxScale: PhotoViewComputedScale.covered * 2.5,
+                                                  ),
+                                                ),
+                                                Positioned(
+                                                  top: 8,
+                                                  right: 8,
+                                                  child: IconButton(
+                                                    icon: const Icon(Icons.close, color: Colors.white),
+                                                    onPressed: () => Navigator.of(context).pop(),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                    );
+                                  }
+                                },
+                                child: CircleAvatar(
                                   radius: 50,
                                   backgroundImage:
                                       person.profileImg != null && person.profileImg!.isNotEmpty ? NetworkImage(person.profileImg!) : null,
@@ -116,35 +163,36 @@ class _PersonDetailsScreenState extends State<PersonDetailsScreen> {
                                           ? const Icon(Icons.person, size: 50, color: Colors.white)
                                           : null,
                                 ),
-                                const SizedBox(width: 16),
-                                Expanded(
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        person.name ?? '-',
-                                        style: Theme.of(
-                                          context,
-                                        ).textTheme.labelLarge?.copyWith(fontSize: 22, fontWeight: FontWeight.bold, color: Colors.white),
-                                      ),
-                                      const SizedBox(height: 4),
-                                      Text(
-                                        person.relation ?? '-',
-                                        style: Theme.of(context).textTheme.labelLarge?.copyWith(color: Colors.white70),
-                                      ),
-                                      const SizedBox(height: 4),
-                                      Text(
-                                        person.primaryMember != null && person.primaryMember!.toLowerCase() == 'yes'
-                                            ? 'Primary Member'
-                                            : 'Member',
-                                        style: Theme.of(context).textTheme.labelLarge?.copyWith(color: Colors.white70, fontSize: 12),
-                                      ),
-                                    ],
-                                  ),
+                              ),
+
+                              const SizedBox(width: 16),
+                              Expanded(
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      person.name ?? '-',
+                                      style: Theme.of(
+                                        context,
+                                      ).textTheme.labelLarge?.copyWith(fontSize: 22, fontWeight: FontWeight.bold, color: Colors.white),
+                                    ),
+                                    const SizedBox(height: 4),
+                                    Text(
+                                      person.relation ?? '-',
+                                      style: Theme.of(context).textTheme.labelLarge?.copyWith(color: Colors.white70),
+                                    ),
+                                    const SizedBox(height: 4),
+                                    Text(
+                                      person.primaryMember != null && person.primaryMember!.toLowerCase() == 'yes'
+                                          ? 'Primary Member'
+                                          : 'Member',
+                                      style: Theme.of(context).textTheme.labelLarge?.copyWith(color: Colors.white70, fontSize: 12),
+                                    ),
+                                  ],
                                 ),
-                              ],
-                            ),
+                              ),
+                            ],
                           ),
                         ),
                         Padding(
