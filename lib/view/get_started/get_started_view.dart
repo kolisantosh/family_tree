@@ -1,9 +1,9 @@
 import 'package:family_tree/configs/Icon/icon.dart';
-import 'package:family_tree/configs/themes/theme_config.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../configs/routes/routes_name.dart';
+import '../../configs/themes/theme_config.dart';
 
 class GetStartedView extends StatelessWidget {
   const GetStartedView({super.key});
@@ -12,6 +12,27 @@ class GetStartedView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      floatingActionButton: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 24.0),
+        child: SizedBox(
+          width: double.infinity,
+          child: ElevatedButton(
+            onPressed: () {
+              Navigator.pushNamedAndRemoveUntil(context, RoutesName.home, (route) => false);
+            },
+            style: ElevatedButton.styleFrom(
+              backgroundColor: ThemeConfig.primaryColor,
+              padding: const EdgeInsets.symmetric(vertical: 16),
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+            ),
+            child: Text(
+              AppLocalizations.of(context)!.getStarted, // Localized text for "Get Started"
+              style: TextStyle(fontSize: 18, color: Colors.white),
+            ),
+          ),
+        ),
+      ),
       body: SafeArea(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -45,33 +66,8 @@ class GetStartedView extends StatelessWidget {
             ),
             const Spacer(),
 
-            Image.asset(AppIcons.img, height: 400, fit: BoxFit.cover),
-
-            const Spacer(),
-
-            // Get Started Button
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 24.0),
-              child: SizedBox(
-                width: double.infinity,
-                child: ElevatedButton(
-                  onPressed: () {
-                    Navigator.pushNamedAndRemoveUntil(context, RoutesName.home, (route) => false);
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: ThemeConfig.primaryColor,
-                    padding: const EdgeInsets.symmetric(vertical: 16),
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-                  ),
-                  child: Text(
-                    AppLocalizations.of(context)!.getStarted, // Localized text for "Get Started"
-                    style: TextStyle(fontSize: 18, color: Colors.white),
-                  ),
-                ),
-              ),
-            ),
-
-            const SizedBox(height: 16),
+            SizedBox(height: 559, child: Image.asset(AppIcons.img, fit: BoxFit.cover)),
+            // SizedBox(height: 10),
           ],
         ),
       ),
