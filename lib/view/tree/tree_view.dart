@@ -36,9 +36,9 @@ class _TreeViewState extends State<TreeView> {
     treeBloc.add(TreeFetch(relationId: widget.relativeId));
 
     builder
-      ..siblingSeparation = 100
-      ..levelSeparation = 150
-      ..subtreeSeparation = 150
+      ..siblingSeparation = 10
+      ..levelSeparation = 15
+      ..subtreeSeparation = 15
       ..orientation = BuchheimWalkerConfiguration.ORIENTATION_TOP_BOTTOM;
   }
 
@@ -81,9 +81,9 @@ class _TreeViewState extends State<TreeView> {
                       ? Center(child: Text(AppLocalizations.of(context)!.noDataFound))
                       : InteractiveViewer(
                         constrained: false,
-                        boundaryMargin: const EdgeInsets.all(100),
-                        minScale: 0.01,
-                        maxScale: 5.6,
+                        boundaryMargin: EdgeInsets.zero,
+                        minScale: 0.001,
+                        // maxScale: 5.5,
                         child: Stack(
                           children: [
                             // Background world map image; public domain / Wikimedia example
@@ -275,7 +275,7 @@ class _TreeViewState extends State<TreeView> {
             ],
             Text(
               name ?? '$memberId',
-              style: Theme.of(context).textTheme.headlineLarge?.copyWith(
+              style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                 shadows: [
                   Shadow(
                     offset: Offset(1.5, 1.5), // horizontal & vertical shadow offset

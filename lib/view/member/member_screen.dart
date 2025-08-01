@@ -162,6 +162,7 @@ class _MemberScreenState extends State<MemberScreen> {
                                     leading: NetworkImageWidget(borderRadius: 5, imageUrl: treeData.profileImg.toString()),
                                     title: Text(treeData.name.toString()),
                                     subtitle: Text(treeData.address.toString()),
+                                    trailing: Icon(Icons.arrow_forward_ios),
                                   ),
                                 );
                               },

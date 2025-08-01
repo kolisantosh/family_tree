@@ -1,8 +1,8 @@
 import 'package:family_tree/repository/tree_api/tree_http_api_repository.dart';
+import 'package:family_tree/repository/tree_detail_api/tree_detail_mock_api_repository.dart';
 
 import '../repository/tree_api/tree_api_repository.dart';
 import '../repository/tree_detail_api/tree_detail_api_repository.dart';
-import '../repository/tree_detail_api/tree_detail_http_api_repository.dart';
 import 'dependency_injection.dart';
 
 // GetIt is a package used for service locator or to manage dependency injection
@@ -20,7 +20,7 @@ class ServiceLocator {
       () => TreeHttpApiRepository(),
     ); // Registering TreeHttpApiRepository as a lazy singleton for TreeApiRepository
     getIt.registerLazySingleton<TreeDetailApiRepository>(
-      () => TreeDetailHttpApiRepository(),
+      () => TreeDetailMockApiRepository(),
     ); // Registering TreeDetailHttpApiRepository as a lazy singleton for TreeDetailApiRepository
   }
 }
